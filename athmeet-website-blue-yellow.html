@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATHMEET - מרימים ספורטאים בכל מקום</title>
+    <style>
+        :root {
+            --primary-blue: #003b80;
+            --secondary-blue: #0057b8;
+            --light-blue: #2c7bdc;
+            --primary-yellow: #ffd700;
+            --secondary-yellow: #ffcc00;
+            --light-yellow: #ffeb99;
+            --dark-blue: #001f40;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --gradient-blue: linear-gradient(135deg, #001f40, #0057b8);
+            --gradient-yellow: linear-gradient(45deg, #ffd700, #ffe44d);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            text-align: right;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--dark-blue);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary-yellow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-yellow);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-button {
+            background: transparent;
+            color: var(--text-light);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--light-blue);
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-button:hover {
+            background: var(--light-blue);
+        }
+
+        .auth-button.signup {
+            background: var(--primary-yellow);
+            color: var(--dark-blue);
+            border: none;
+        }
+
+        .auth-button.signup:hover {
+            background: var(--secondary-yellow);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--gradient-blue);
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            left: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 span {
+            color: var(--primary-yellow);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Buttons */
+        .cta-button {
+            background: var(--primary-yellow);
+            color: var(--dark-blue);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background: var(--secondary-yellow);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--primary-yellow);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        section:nth-child(odd) {
+            background: var(--dark-blue);
+        }
+
+        section:nth-child(even) {
+            background: var(--primary-blue);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-yellow);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 1rem;
+            margin-right: auto;
+            margin-left: auto;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-yellow);
+        }
+
+        /* Features */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-yellow);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-yellow);
+        }
+
+        /* Coaches Section */
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .search-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .search-form select,
+        .search-form input {
+            flex: 1;
+            min-width: 150px;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+
+        .search-form button {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-yellow);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .coaches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .coach-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .coach-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-yellow);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .coach-image {
+            width: 100%;
+            height: 250px;
+            background-color: var(--primary-blue);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .coach-info {
+            padding: 1.5rem;
+        }
+
+        .coach-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-yellow);
+        }
+
+        /* Store Section */
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .store-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .store-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-yellow);
+        }
+
+        .store-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-yellow);
+        }
+
+        /* Articles Section */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-yellow);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            background-color: var(--primary-blue);
+        }
+
+        .article-info {
+            padding: 1.5rem;
+        }
+
+        .article-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-yellow);
+        }
+
+        /* Locker Room */
+        .locker-room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .group-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-yellow);
+        }
+
+        .group-card h3 {
+            color: var(--primary-yellow);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .contact-form:hover {
+            border-color: var(--primary-yellow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light-yellow);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-yellow);
+            outline: none;
+        }
+
+        .form-group textarea {
+            height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        footer p:first-child {
+            color: var(--primary-yellow);
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">ATH<span>MEET</span></a>
+            <div class="nav-links">
+                <a href="#features">תכונות</a>
+                <a href="#coaches">מאמנים</a>
+                <a href="#store">חנות</a>
+                <a href="#articles">מאמרים</a>
+                <a href="#locker-room">חדר הלבשה</a>
+                <a href="#contact">צור קשר</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="auth-button">התחברות</button>
+                <button class="auth-button signup">הרשמה</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>ברוכים הבאים ל- <span>ATHMEET</span></h1>
+            <p>מרימים ספורטאים בכל מקום</p>
+            <p>התחברו עם ספורטאי עילית ואולימפיים לאימון וחניכה מותאמים אישית</p>
+            <a href="#coaches" class="cta-button">מצא מאמן</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2 class="section-title">תכונות הפלטפורמה</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🏅</div>
+                <h3>פרופילי ספורטאים מקצועיים</h3>
+                <p>הצגת מומחיות, הצעת שירותים וניהול פגישות</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📽️</div>
+                <h3>ספריית מדיה מקצועית</h3>
+                <p>גישה למשאבים ותוכן באיכות גבוהה</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛍️</div>
+                <h3>חנות ספורט דיגיטלית</h3>
+                <p>קידום ומכירת מוצרים דיגיטליים וקורסים</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤝</div>
+                <h3>מרכז קהילה</h3>
+                <p>התחברו, שתפו ידע והצטרפו לאירועים ודיונים</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coaches Section -->
+    <section id="coaches">
+        <h2 class="section-title">מצא את המאמן המושלם</h2>
+        
+        <div class="search-container">
+            <form class="search-form">
+                <select>
+                    <option value="" disabled selected>ענף ספורט</option>
+                    <option value="basketball">כדורסל</option>
+                    <option value="soccer">כדורגל</option>
+                    <option value="tennis">טניס</option>
+                    <option value="swimming">שחייה</option>
+                    <option value="judo">ג'ודו</option>
+                </select>
+                <select>
+                    <option value="" disabled selected>התמחות</option>
+                    <option value="technique">טכניקה</option>
+                    <option value="mental">הכנה מנטלית</option>
+                    <option value="strategy">אסטרטגיה</option>
+                </select>
+                <button type="button">חפש</button>
+            </form>
+        </div>
+
+        <div class="coaches-grid">
+            <div class="coach-card">
+                <div class="coach-image"></div>
+                <div class="coach-info">
+                    <h3>אורי ששון</h3>
+                    <p>מדליסט אולימפי - ג'ודו</p>
+                    <p>מומחה באימון מנטלי וביצועים</p>
+                    <a href="#contact" class="cta-button">צור קשר</a>
+                </div>
+            </div>
+            <div class="coach-card">
+                <div class="coach-image"></div>
+                <div class="coach-info">
+                    <h3>יוליה גלושקו</h3>
+                    <p>שחקנית טניס מקצועית</p>
+                    <p>אימון והכנה לתחרויות</p>
+                    <a href="#contact" class="cta-button">צור קשר</a>
+                </div>
+            </div>
+            <div class="coach-card">
+                <div class="coach-image"></div>
+                <div class="coach-info">
+                    <h3>יעקב טומרקין</h3>
+                    <p>אלוף שחייה</p>
+                    <p>טכניקות אימון ואופטימיזציה</p>
+                    <a href="#contact" class="cta-button">צור קשר</a>
+                </div>
+            </div>
+            <div class="coach-card">
+                <div class="coach-image"></div>
+                <div class="coach-info">
+                    <h3>חן פומרנץ</h3>
+                    <p>שחקן כדוריד מקצועי</p>
+                    <p>אסטרטגיה ומנהיגות</p>
+                    <a href="#contact" class="cta-button">צור קשר</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Store Section -->
+    <section id="store">
+        <h2 class="section-title">חנות דיגיטלית</h2>
+        <div class="store-grid">
+            <div class="store-item">
+                <div class="store-icon">📚</div>
+                <h3>ספרים אלקטרוניים</h3>
+                <p>ספרי הדרכה ומדריכים מקצועיים</p>
+            </div>
+            <div class="store-item">
+                <div class="store-icon">🎬</div>
+                <h3>קורסים מוקלטים</h3>
+                <p>הדרכות וידאו מפורטות</p>
+            </div>
+            <div class="store-item">
+                <div class="store-icon">⚽</div>
+                <h3>ציוד ספורט</h3>
+                <p>ציוד מומלץ על ידי מקצוענים</p>
+            </div>
+            <div class="store-item">
+                <div class="store-icon">📊</div>
+                <h3>תוכניות אימון</h3>
+                <p>תוכניות אימון מותאמות אישית</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section id="articles">
+        <h2 class="section-title">מאמרים וחומרי קריאה</h2>
+        <div class="articles-grid">
+            <div class="article-card">
+                <div class="article-image"></div>
+                <div class="article-info">
+                    <h3>אימון מנטלי לספורטאים</h3>
+                    <p>כיצד לשפר את המוכנות המנטלית לתחרויות</p>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-image"></div>
+                <div class="article-info">
+                    <h3>התאוששות מפציעות</h3>
+                    <p>מדריך להתאוששות מהירה וחזרה לשגרת אימונים</p>
+                </div>
+            </div>
+            <div class="article-card">
+                <div class="article-image"></div>
+                <div class="article-info">
+                    <h3>תזונה לביצועים מיטביים</h3>
+                    <p>עקרונות תזונה לשיפור ביצועים ספורטיביים</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locker Room Section -->
+    <section id="locker-room">
+        <h2 class="section-title">חדר הלבשה</h2>
+        <div class="locker-room-grid">
+            <div class="group-card">
+                <h3>פציעות ספורט</h3>
+                <p>קבוצת דיון בנושא מניעת פציעות והתאוששות</p>
+                <a href="#" class="cta-button">הצטרף לקבוצה</a>
+            </div>
+            <div class="group-card">
+                <h3>הכנה מנטלית לתחרויות</h3>
+                <p>טיפים וטכניקות להתמודדות עם לחץ</p>
+                <a href="#" class="cta-button">הצטרף לקבוצה</a>
+            </div>
+            <div class="group-card">
+                <h3>כדורסל - טיפים וטכניקות</h3>
+                <p>שיתוף ידע ועצות לשחקני כדורסל</p>
+                <a href="#" class="cta-button">הצטרף לקבוצה</a>
+            </div>
+            <div class="group-card">
+                <h3>תזונת ספורטאים</h3>
+                <p>עצות תזונה ותוכניות אכילה לספורטאים</p>
+                <a href="#" class="cta-button">הצטרף לקבוצה</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">צור קשר</h2>
+        <div class="contact-form">
+            <form>
+                <div class="form-group">
+                    <label for="name">שם</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">אימייל</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">טלפון</label>
+                    <input type="tel" id="phone">
+                </div>
+                <div class="form-group">
+                    <label for="message">הודעה</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                <button type="submit" class="cta-button">שלח הודעה</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 ATHMEET. כל הזכויות שמורות.</p>
+        <p>נוסד על ידי אורי ששון ותומר יהודיין</p>
+    </footer>
+
+    <script>
+        // Simple smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('תודה על פנייתך! נחזור אליך בהקדם.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
